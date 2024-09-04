@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Map Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* Скрываем все контенты по умолчанию */
+        .desktop, .mobile {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        function loadContent() {
+            const width = window.innerWidth;
+            const container = document.getElementById('container');
+
+            if (width >= 768) {  // Можно изменить порог ширины, если нужно
+                fetch('desktop.html')
+                    .then(response => response.text())
+                    .then(html => container.innerHTML = html)
+                    .catch(error => console.error('Error loading desktop content:', error));
+            } else {
+                fetch('mobile.html')
+                    .then(response => response.text())
+                    .then(html => container.innerHTML = html)
+                    .catch(error => console.error('Error loading mobile content:', error));
+            }
+        }
+
+        window.onload = loadContent;
+        window.onresize = loadContent;
+    </script>
+</body>
+</html>
